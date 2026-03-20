@@ -1,0 +1,12 @@
+{
+  "name": "astronomical-sps",
+  "version": "1.0.0",
+  "description": "Astronomical SPS Vercel Functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cybersource-rest-client": "^0.0.54"
+  }
+}
