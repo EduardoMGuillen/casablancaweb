@@ -55,27 +55,31 @@ module.exports = async function handler(req, res) {
     const processingInformation = new cybersourceRestApi.Ptsv2paymentsProcessingInformation();
     processingInformation.commerceIndicator = "internet";
 
-    // Requesting 3D Secure Verification
-    processingInformation.actionList = ["CONSUMER_AUTHENTICATION"];
+
+    let request = new cybersourceRestApi.CreatePaymentRequest();
+    request.clientReferenceInformation = {
+       code: "TicketPurchase-" + Math.floor(Math.random() * 10000)
+    };
+    request.processingInformation = {
+       capture: false,
+       commerceIndicator: "internet",
+       actionList: ["CONSUMER_AUTHENTICATION"],
+       paymentSolution: "012" // For Sandbox, simulating a successful auth
+    };
+    request.paymentInformation = {
+       token: {
+           id: transientToken
+       }
+    };
+    request.orderInformation = {
+       amountDetails: {
+           totalAmount: "15.00", // $15
+           currency: "USD"
+       }
+    };
     
-    // For Sandbox, simulating a successful auth
-    processingInformation.paymentSolution = "012";
-
-    const paymentInformation = new cybersourceRestApi.Ptsv2paymentsPaymentInformation();
-    const paymentInformationCustomer = new cybersourceRestApi.Ptsv2paymentsPaymentInformationCustomer();
-    paymentInformation.customer = paymentInformationCustomer;
-
-    const tokenInformation = new cybersourceRestApi.Ptsv2paymentsTokenInformation();
-    tokenInformation.transientTokenJwt = transientToken;
-    
-    const orderInformation = new cybersourceRestApi.Ptsv2paymentsOrderInformation();
-    const orderInformationAmountDetails = new cybersourceRestApi.Ptsv2paymentsOrderInformationAmountDetails();
-    orderInformationAmountDetails.totalAmount = "150.00"; // $150
-    orderInformationAmountDetails.currency = "USD";
-    orderInformation.amountDetails = orderInformationAmountDetails;
-
     // Billing Information
-    const billTo = new cybersourceRestApi.Ptsv2paymentsOrderInformationBillTo();
+    const billTo = {};
     billTo.firstName = "John";
     billTo.lastName = "Doe";
     billTo.address1 = "1 Market St";
