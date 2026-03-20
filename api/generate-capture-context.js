@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
     // We send a request to generate the capture context
     const requestObj = new cybersourceRestApi.GenerateCaptureContextRequest();
     requestObj.clientVersion = "v2.0";
-    requestObj.targetOrigins = ["https://astronomical-sps.vercel.app", "http://localhost:3000", "http://localhost:5000"];
+    requestObj.targetOrigins = ["https://astronomical-sps.vercel.app", "https://casablancaweb.vercel.app", "https://www.lagrancasablanca.com", "http://localhost:3000", "http://localhost:5000"];
     requestObj.allowedCardNetworks = ["VISA", "MASTERCARD", "AMEX"];
 
     instance.generateCaptureContext(requestObj, function (error, data, response) {
