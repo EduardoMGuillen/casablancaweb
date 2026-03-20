@@ -41,64 +41,46 @@ module.exports = async function handler(req, res) {
     };
 
     const apiClient = new cybersourceRestApi.ApiClient();
-    const configObject = new cybersourceRestApi.Configuration();
-    apiClient.requestOptions = {
-        headers: {
-            'v-c-merchant-id': merchantId
-        }
-    };
-
     const instance = new cybersourceRestApi.PaymentsApi(configObj, apiClient);
-    const clientReferenceInformation = new cybersourceRestApi.Ptsv2paymentsClientReferenceInformation();
-    clientReferenceInformation.code = "test_payment_microform_" + Date.now();
-
-    const processingInformation = new cybersourceRestApi.Ptsv2paymentsProcessingInformation();
-    processingInformation.commerceIndicator = "internet";
-
 
     let request = new cybersourceRestApi.CreatePaymentRequest();
+    
     request.clientReferenceInformation = {
-       code: "TicketPurchase-" + Math.floor(Math.random() * 10000)
+       code: "TicketPurchase-" + Math.floor(Math.random() * 100000)
     };
+    
     request.processingInformation = {
-       capture: false,
+       capture: false, // Auth only
        commerceIndicator: "internet",
        actionList: ["CONSUMER_AUTHENTICATION"],
-       paymentSolution: "012" // For Sandbox, simulating a successful auth
+       paymentSolution: "012"
     };
+
     request.paymentInformation = {
        token: {
            id: transientToken
        }
     };
+
     request.orderInformation = {
        amountDetails: {
-           totalAmount: "15.00", // $15
+           totalAmount: "15.00",
            currency: "USD"
+       },
+       billTo: {
+           firstName: "John",
+           lastName: "Doe",
+           address1: "1 Market St",
+           locality: "San Francisco",
+           administrativeArea: "CA",
+           postalCode: "94105",
+           country: "US",
+           email: "test@cybersource.com",
+           phoneNumber: "4158880000"
        }
     };
-    
-    // Billing Information
-    const billTo = {};
-    billTo.firstName = "John";
-    billTo.lastName = "Doe";
-    billTo.address1 = "1 Market St";
-    billTo.locality = "San Francisco";
-    billTo.administrativeArea = "CA";
-    billTo.postalCode = "94105";
-    billTo.country = "US";
-    billTo.email = "test@cybersource.com";
-    billTo.phoneNumber = "4158880000";
-    orderInformation.billTo = billTo;
-    
-    const requestObj = new cybersourceRestApi.CreatePaymentRequest();
-    requestObj.clientReferenceInformation = clientReferenceInformation;
-    requestObj.processingInformation = processingInformation;
-    requestObj.paymentInformation = paymentInformation;
-    requestObj.tokenInformation = tokenInformation;
-    requestObj.orderInformation = orderInformation;
 
-    instance.createPayment(requestObj, function (error, data, response) {
+    instance.createPayment(request, function (error, data, response) {
       if (error) {
         console.error("CyberSource API Error:", error);
         res.status(500).json({ error: "Payment failed", details: error });
