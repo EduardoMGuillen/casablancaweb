@@ -51,9 +51,7 @@ module.exports = async function handler(req, res) {
     
     request.processingInformation = {
        capture: false, // Auth only
-       commerceIndicator: "internet",
-       actionList: ["CONSUMER_AUTHENTICATION"],
-       paymentSolution: "012"
+       commerceIndicator: "internet"
     };
 
     request.tokenInformation = {
@@ -62,8 +60,8 @@ module.exports = async function handler(req, res) {
 
     request.orderInformation = {
        amountDetails: {
-           totalAmount: "15.00",
-           currency: "USD"
+           totalAmount: "150.00", // $150 HNL
+           currency: "HNL"
        },
        billTo: {
            firstName: "John",
