@@ -2,7 +2,7 @@ const cybersourceRestApi = require('cybersource-rest-client');
 
 async function test() {
     console.log("Starting test...");
-    const merchantId = 'test_bac_hn_astronomical';
+    const merchantId = 'test_bac_master_acct';
     const runEnvironment = "apitest.cybersource.com";
     
     const configObj = {
