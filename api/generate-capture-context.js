@@ -26,7 +26,8 @@ module.exports = async function handler(req, res) {
       keyAlias: merchantId,
       keyPass: merchantId,
       keyFileName: merchantId,
-      keysDirectory: 'keys'
+      keysDirectory: 'keys',
+      logConfiguration: { enableLog: false }
     };
 
     const apiClient = new cybersourceRestApi.ApiClient();

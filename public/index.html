@@ -1278,7 +1278,7 @@
             fetch('/api/generate-capture-context')
                 .then(res => res.json())
                 .then(data => {
-                    if (data && typeof data === 'string' || data.keyId) {
+                    if (data && (typeof data === 'string' || data.keyId)) {
                         const jwt = typeof data === 'string' ? data : data.keyId || data.clientReferenceInformation || (data.status ? false : data);
                         if(jwt) {
                             initMicroform(jwt);
@@ -1287,13 +1287,18 @@
                             statusText.innerText = "Respuesta de servidor inválida.";
                         }
                     } else {
-                        statusText.innerText = "Error generando contexto. Revisa Variables Vercel.";
+                        let errMsg = data.error || "Error generando contexto.";
+                        if (data.details && data.details.response && data.details.response.text) {
+                            errMsg += " " + JSON.parse(data.details.response.text).response.rmsg;
+                        }
+                        statusText.innerText = "Aviso Cybersource: " + errMsg;
+                        statusText.style.color = "yellow";
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    statusText.innerText = "Aviso: Servidor Vercel no configurado aún con Credenciales Sandbox Cybersource.";
-                    statusText.style.color = "yellow";
+                    statusText.innerText = "Error local: No se pudo conectar al API en Vercel.";
+                    statusText.style.color = "red";
                 });
         }
 
