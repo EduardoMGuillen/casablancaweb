@@ -31,7 +31,6 @@ module.exports = async function handler(req, res) {
     };
 
     const apiClient = new cybersourceRestApi.ApiClient();
-    const configObject = new cybersourceRestApi.Configuration();
 
     const instance = new cybersourceRestApi.MicroformIntegrationApi(configObj, apiClient);
     
