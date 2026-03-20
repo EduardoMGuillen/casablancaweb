@@ -310,14 +310,22 @@
             justify-content: center;
             align-items: center;
             gap: 2rem;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            width: 100%;
         }
 
         .hero-logo img {
-            max-width: 300px;
-            width: 100%;
-            height: auto;
+            height: 120px;
+            width: auto;
+            max-width: 30%;
             object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+            transition: all 0.3s ease;
+        }
+        
+        .hero-logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.5));
         }
 
         @keyframes glow {
@@ -725,12 +733,13 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-logo {
-                flex-direction: column;
+                flex-wrap: wrap;
                 gap: 1.5rem;
             }
             
             .hero-logo img {
-                max-width: 250px;
+                height: 80px;
+                max-width: 45%;
             }
             
             .videos-grid {
@@ -772,7 +781,8 @@
             }
             
             .hero-logo img {
-                max-width: 200px;
+                height: 70px;
+                max-width: 80%;
             }
             
             .videos-grid {
