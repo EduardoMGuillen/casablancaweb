@@ -1,6 +1,6 @@
 const cybersourceRestApi = require('cybersource-rest-client');
 
-export default function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Allow CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
