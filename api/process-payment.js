@@ -32,7 +32,7 @@ module.exports = async function handler(req, res) {
       runEnvironment: runEnvironment,
       merchantID: merchantId,
       merchantKeyId: process.env.CYBERSOURCE_KEY_ID || '08c94330-f618-42a3-b09d-e1e43be5efda',
-      merchantsecretKey: process.env.CYBERSOURCE_SECRET_KEY || 'yBJxy6LjM2TmcPGu+GaJrHtkke25fPpUX+UY6/L/1tE=',
+      merchantsecretKey: process.env.CYBERSOURCE_SHARED_SECRET || process.env.CYBERSOURCE_SECRET_KEY || 'yBJxy6LjM2TmcPGu+GaJrHtkke25fPpUX+UY6/L/1tE=',
       keyAlias: merchantId,
       keyPass: merchantId,
       keyFileName: merchantId,
