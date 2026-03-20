@@ -56,10 +56,8 @@ module.exports = async function handler(req, res) {
        paymentSolution: "012"
     };
 
-    request.paymentInformation = {
-       token: {
-           id: transientToken
-       }
+    request.tokenInformation = {
+       transientTokenJwt: transientToken
     };
 
     request.orderInformation = {
