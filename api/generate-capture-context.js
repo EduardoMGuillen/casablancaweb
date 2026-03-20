@@ -32,11 +32,6 @@ module.exports = async function handler(req, res) {
 
     const apiClient = new cybersourceRestApi.ApiClient();
     const configObject = new cybersourceRestApi.Configuration();
-    apiClient.requestOptions = {
-      headers: {
-        'v-c-merchant-id': merchantId
-      }
-    };
 
     const instance = new cybersourceRestApi.MicroformIntegrationApi(configObj, apiClient);
     
